@@ -1734,6 +1734,7 @@ class PlayState extends MusicBeatState
 					{
 						health -= 0.0475;
 						vocals.volume = 0;
+						combo = 0;
 					}
 
 					daNote.active = false;
@@ -2240,7 +2241,7 @@ class PlayState extends MusicBeatState
 			{
 				gf.playAnim('sad');
 			}
-			combo = 0;
+			
 
 			songScore -= 10;
 
