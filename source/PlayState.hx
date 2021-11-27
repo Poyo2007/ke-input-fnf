@@ -130,6 +130,8 @@ class PlayState extends MusicBeatState
 	
 	public static var repPresses:Int = 0;
 	public static var repReleases:Int = 0;
+	
+	public static var theFunne:Bool = true;
 
 	#if desktop
 	// Discord RPC variables
