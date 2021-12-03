@@ -2117,6 +2117,36 @@ class PlayState extends MusicBeatState
 						if (pressArray[i] && !directionList.contains(i))
 							dontCheck = true;
 					}
+					
+					if (perfectMode)
+
+						goodNoteHit(possibleNotes[0]);
+
+					else if (possibleNotes.length > 0 && !dontCheck)
+					{
+						if (!FlxG.save.data.ghost)
+						{
+							for (shit in 0...pressArray.length)
+								{ // if a direction is hit that shouldn't be
+									if (pressArray[shit] && !directionList.contains(shit))
+										noteMiss(shit, null);
+								}
+						}
+						for (coolNote in possibleNotes)
+						{
+							if (pressArray[coolNote.noteData])
+							{
+								scoreTxt.color = FlxColor.WHITE;
+								goodNoteHit(coolNote);
+							}
+						}
+					}
+					else if (!FlxG.save.data.ghost)
+						{
+							for (shit in 0...pressArray.length)
+								if (pressArray[shit])
+									noteMiss(shit, null);
+						}
 
 				}
 				
