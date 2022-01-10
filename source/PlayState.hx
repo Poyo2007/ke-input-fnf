@@ -1810,6 +1810,7 @@ class PlayState extends MusicBeatState
 					daNote.kill();
 					notes.remove(daNote, true);
 					daNote.destroy();
+				}
 			});
 
 		if (!inCutscene)
@@ -1820,8 +1821,6 @@ class PlayState extends MusicBeatState
 			endSong();
 		#end
 			}
-		}
-	}
 
 	function endSong():Void
 	{
