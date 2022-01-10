@@ -1673,7 +1673,7 @@ class PlayState extends MusicBeatState
 
 		if (generatedMusic)
 		{
-			notes.forEachAlive(function(daNote:Note)
+			notes.forEachAlive(function(daNote:Note));
 			{
 				if (daNote.y > FlxG.height)
 				{
@@ -1792,10 +1792,9 @@ class PlayState extends MusicBeatState
 										daNote.kill();
 										notes.remove(daNote, true);
 										daNote.destroy();
-								}
 							}
-							
-	
+							}
+
 				if (daNote.y < -daNote.height && !downscroll_isenabled || (daNote.y >= strumLine.y + 106) && downscroll_isenabled)
 				{
 					if (daNote.tooLate || !daNote.wasGoodHit)
@@ -1811,7 +1810,7 @@ class PlayState extends MusicBeatState
 					daNote.kill();
 					notes.remove(daNote, true);
 					daNote.destroy();
-			});
+			})
 
 		if (!inCutscene)
 			keyShit();
