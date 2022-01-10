@@ -1810,7 +1810,7 @@ class PlayState extends MusicBeatState
 					daNote.kill();
 					notes.remove(daNote, true);
 					daNote.destroy();
-			})
+			}
 
 		if (!inCutscene)
 			keyShit();
@@ -1819,7 +1819,8 @@ class PlayState extends MusicBeatState
 		if (FlxG.keys.justPressed.ONE)
 			endSong();
 		#end
-	}
+	});
+		}
 
 	function endSong():Void
 	{
@@ -2644,4 +2645,6 @@ class PlayState extends MusicBeatState
 	}
 
 	var curLight:Int = 0;
+}
+}
 }
