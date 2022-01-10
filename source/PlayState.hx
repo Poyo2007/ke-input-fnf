@@ -1819,8 +1819,10 @@ class PlayState extends MusicBeatState
 		if (FlxG.keys.justPressed.ONE)
 			endSong();
 		#end
-	});
+			}
 		}
+			
+		
 
 	function endSong():Void
 	{
@@ -2645,6 +2647,5 @@ class PlayState extends MusicBeatState
 	}
 
 	var curLight:Int = 0;
-}
 }
 }
