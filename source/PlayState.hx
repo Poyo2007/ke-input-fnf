@@ -1673,7 +1673,7 @@ class PlayState extends MusicBeatState
 
 		if (generatedMusic)
 		{
-			notes.forEachAlive(function(daNote:Note));
+			notes.forEachAlive(function(daNote:Note)
 			{
 				if (daNote.y > FlxG.height)
 				{
