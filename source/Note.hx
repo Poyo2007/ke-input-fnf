@@ -20,6 +20,7 @@ class Note extends FlxSprite
 	public var tooLate:Bool = false;
 	public var wasGoodHit:Bool = false;
 	public var prevNote:Note;
+	public var noteType:Int = 0; // goes anywhere at the start next where all the vars are declared
 
 	public var sustainLength:Float = 0;
 	public var isSustainNote:Bool = false;
@@ -32,15 +33,14 @@ class Note extends FlxSprite
 	public static var BLUE_NOTE:Int = 1;
 	public static var RED_NOTE:Int = 3;
 
-	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false)
+	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?noteType:Int = 0)
 	{
 		super();
 
-		if (prevNote == null)
+		if (prevNote == null)	
 			prevNote = this;
-
-		this.prevNote = prevNote;
-		isSustainNote = sustainNote;
+		this.noteType = noteType;
+		this.prevNote = prevNote; 
 
 		x += 50;
 		// MAKE SURE ITS DEFINITELY OFF SCREEN?
@@ -100,6 +100,27 @@ class Note extends FlxSprite
 				setGraphicSize(Std.int(width * 0.7));
 				updateHitbox();
 				antialiasing = true;
+				
+			if(noteType == 2){
+
+					frames = Paths.getSparrowAtlas('NOTE_assets');
+
+				animation.addByPrefix('greenScroll', 'green0');
+				animation.addByPrefix('redScroll', 'red0');
+				animation.addByPrefix('blueScroll', 'blue0');
+				animation.addByPrefix('purpleScroll', 'purple0');
+
+				animation.addByPrefix('purpleholdend', 'pruple end hold');
+				animation.addByPrefix('greenholdend', 'green hold end');
+				animation.addByPrefix('redholdend', 'red hold end');
+				animation.addByPrefix('blueholdend', 'blue hold end');
+
+				animation.addByPrefix('purplehold', 'purple hold piece');
+				animation.addByPrefix('greenhold', 'green hold piece');
+				animation.addByPrefix('redhold', 'red hold piece');
+				animation.addByPrefix('bluehold', 'blue hold piece'); // you'll probably just need this, but an offset may not even be needed.
+
+				}
 		}
 
 		switch (noteData)

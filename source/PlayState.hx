@@ -61,6 +61,7 @@ class PlayState extends MusicBeatState
 	private var vocals:FlxSound;
 
 	private var dad:Character;
+	private var dad2:Character;
 	private var gf:Character;
 	private var boyfriend:Boyfriend;
 
@@ -612,6 +613,12 @@ class PlayState extends MusicBeatState
 		gf.scrollFactor.set(0.95, 0.95);
 
 		dad = new Character(100, 100, SONG.player2);
+		
+		if (dad.curCharacter == 'dad&mom')
+		{
+		  dad2 = new Character(150, 100, 'mom');
+		  //replace mom with character of choice
+		}
 
 		var camPos:FlxPoint = new FlxPoint(dad.getGraphicMidpoint().x, dad.getGraphicMidpoint().y);
 
@@ -698,6 +705,10 @@ class PlayState extends MusicBeatState
 			add(limo);
 
 		add(dad);
+		if (dad.curCharacter == 'dad&mom')
+		{
+		  add(dad2);
+		}
 		add(boyfriend);
 
 		var doof:DialogueBox = new DialogueBox(false, dialogue);
@@ -963,6 +974,10 @@ class PlayState extends MusicBeatState
 		startTimer = new FlxTimer().start(Conductor.crochet / 1000, function(tmr:FlxTimer)
 		{
 			dad.dance();
+			if (dad.curCharacter == 'dad&mom')
+			{
+			  dad2.dance();
+			}
 			gf.dance();
 			boyfriend.playAnim('idle');
 
@@ -1126,7 +1141,8 @@ class PlayState extends MusicBeatState
 				else
 					oldNote = null;
 
-				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
+				var daType = songNotes[3];
+				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote, false, daType);
 				swagNote.sustainLength = songNotes[2];
 				swagNote.scrollFactor.set(0, 0);
 
@@ -1139,7 +1155,7 @@ class PlayState extends MusicBeatState
 				{
 					oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 
-					var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + Conductor.stepCrochet, daNoteData, oldNote, true);
+					var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + Conductor.stepCrochet, daNoteData, oldNote, true, daType);
 					sustainNote.scrollFactor.set();
 					unspawnNotes.push(sustainNote);
 
@@ -1712,9 +1728,28 @@ class PlayState extends MusicBeatState
 							dad.playAnim('singUP' + altAnim, true);
 						case 3:
 							dad.playAnim('singRIGHT' + altAnim, true);
+							
+					if (daNote.noteType == 2 && dad.curCharacter == 'dad&mom') //this does differnt animations depending on the note Type.
+						{
+									switch (Math.abs(daNote.noteData))
+									{
+										case 2:
+											dad2.playAnim('singUP' + altAnim, true);
+										case 3:
+											dad2.playAnim('singRIGHT' + altAnim, true);
+										case 1:
+											dad2.playAnim('singDOWN' + altAnim, true);
+										case 0:
+											dad2.playAnim('singLEFT' + altAnim, true);
+									}
+					    }
 					}
 
 					dad.holdTimer = 0;
+					if (dad.curCharacter == 'dad&mom')
+					{
+					  dad2.holdTimer = 0;
+					}
 
 					if (SONG.needsVoices)
 						vocals.volume = 1;
@@ -1728,6 +1763,39 @@ class PlayState extends MusicBeatState
 				// daNote.y = (strumLine.y - (songTime - daNote.strumTime) * (0.45 * PlayState.SONG.speed));
 
 				// I wouldn't have found this error with downscroll if I hadn't looked into the kade engine code (thanks to kade dev)
+				switch (daNote.noteType) //you can add as many cases as you want, just make sure the noteType number matches properly!
+							{
+								case 0: //normal, you might wanna add in that replay stuff if you want them to work properly, depends on your kade engine version.
+								{
+									if (daNote.isSustainNote && daNote.wasGoodHit)
+										{
+
+											daNote.kill();
+											notes.remove(daNote, true);
+											daNote.destroy();
+											
+										}
+									else
+										{
+											if (daNote.mustPress)
+											{
+												health -= 0.0475;
+												vocals.volume = 0;
+												combo = 0;
+
+											}
+										}
+					
+										daNote.active = false;
+										daNote.visible = false;
+					
+										daNote.kill();
+										notes.remove(daNote, true);
+										daNote.destroy();
+								}
+							}
+							
+	
 				if (daNote.y < -daNote.height && !downscroll_isenabled || (daNote.y >= strumLine.y + 106) && downscroll_isenabled)
 				{
 					if (daNote.tooLate || !daNote.wasGoodHit)
@@ -1746,7 +1814,6 @@ class PlayState extends MusicBeatState
 				}
 				
 			});
-		}
 
 		if (!inCutscene)
 			keyShit();
@@ -2483,6 +2550,10 @@ class PlayState extends MusicBeatState
 			// Dad doesnt interupt his own notes
 			if (SONG.notes[Math.floor(curStep / 16)].mustHitSection)
 				dad.dance();
+				if (dad.curCharacter == 'dad&mom')
+				{
+				  dad2.dance();
+				}
 		}
 		// FlxG.log.add('change bpm' + SONG.notes[Std.int(curStep / 16)].changeBPM);
 		wiggleShit.update(Conductor.crochet);
