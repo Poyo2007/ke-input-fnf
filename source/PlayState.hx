@@ -1821,8 +1821,7 @@ class PlayState extends MusicBeatState
 		#end
 			}
 		}
-			
-		
+	}
 
 	function endSong():Void
 	{
@@ -2647,5 +2646,4 @@ class PlayState extends MusicBeatState
 	}
 
 	var curLight:Int = 0;
-}
 }
