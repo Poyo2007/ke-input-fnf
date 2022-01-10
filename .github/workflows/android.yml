@@ -66,8 +66,8 @@ jobs:
           haxelib install actuate 
           haxelib list
 
-     - name: script run line haha
-       run: |
+      - name: script run line haha
+        run: |
           haxelib run lime build android
           
       - uses: actions/upload-artifact@v2
