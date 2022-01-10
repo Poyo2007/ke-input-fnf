@@ -1763,7 +1763,7 @@ class PlayState extends MusicBeatState
 				// daNote.y = (strumLine.y - (songTime - daNote.strumTime) * (0.45 * PlayState.SONG.speed));
 
 				// I wouldn't have found this error with downscroll if I hadn't looked into the kade engine code (thanks to kade dev)
-				switch (daNote.noteType) //you can add as many cases as you want, just make sure the noteType number matches properly!
+				/*switch (daNote.noteType) //you can add as many cases as you want, just make sure the noteType number matches properly!
 							{
 								case 0: //normal, you might wanna add in that replay stuff if you want them to work properly, depends on your kade engine version.
 								{
@@ -1793,7 +1793,7 @@ class PlayState extends MusicBeatState
 										notes.remove(daNote, true);
 										daNote.destroy();
 							}
-							}
+							}*/
 
 				if (daNote.y < -daNote.height && !downscroll_isenabled || (daNote.y >= strumLine.y + 106) && downscroll_isenabled)
 				{
@@ -1902,7 +1902,6 @@ class PlayState extends MusicBeatState
 			trace('WENT BACK TO FREEPLAY??');
 			FlxG.switchState(new FreeplayState());
 		}
-	}
 
 	var endingSong:Bool = false;
 
